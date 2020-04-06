@@ -11,8 +11,8 @@ class Client
     Client.all << self
   end
 
-  def delivery_request recipient, type 
-    Job.new(self, recipient, type)
+  def delivery_request recipient, type, service_type 
+    Job.new(self, recipient, type, service_type)
   end
 
   def all_client_jobs

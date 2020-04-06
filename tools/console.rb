@@ -29,6 +29,13 @@ deloitte = Client.new('Deloitte','200 Berkley St',bb)
 # Couriers
 misshell = Courier.new('Miss Hell',Time.new(1989,01,16),2013)
 
+# Jobs
+keegan.delivery_request('101 Federal St','copy box','standar')
+keegan.delivery_request('1 Federal St','envelope','standard')
+keegan.delivery_request('1 South Station','5 copy boxes','standard')
+keegan.delivery_request('2 Seaport Ln','flat','rush')
+vertex.delivery_request('Post Office','mail tub','standard')
+lawson.delivery_request('800 Boylston St','envelope','standard')
 
 binding.pry
 

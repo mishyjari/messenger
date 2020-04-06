@@ -2,18 +2,27 @@ class Job
   @@all = []
 
   attr_reader :client
-  attr_accessor :courier, :recipient, :due, :type
+  attr_accessor :courier, :recipient, :due, :type, :active
 
-  def initialize client, recipient, type, due=Dispatch.standard, ready=Time.now
-    @courier = Dispatch.courier
+  def initialize client, recipient, type, service_type, ready=Time.now
+    @courier = nil
     @client = client
     @recipient = recipient
-    @due = due
     @type = type
     @ready = Time.now
     @picked = false
     @active = true
     @drop_time = nil
+    case service_type
+      when Time
+        @due = service_type
+      when 'standard'
+        t = Time.now
+        @due = Time.new(t.year,t.month,t.day,t.hour+3,t.min,t.sec)
+      when 'rush'
+        t = Time.now
+        @due = Time.new(t.year,t.month,t.day,t.hour+1,t.min,t.sec)
+    end
     Job.all << self
   end
 
@@ -25,6 +34,14 @@ class Job
 
   def pickup time=Time.now
     self.picked = time
+  end
+
+  def assign_job courier
+    self.courier = courier
+  end
+
+  def self.unassigned_jobs
+    Job.active_jobs.select{ |job| !job.courier }
   end
 
   def self.active_jobs
