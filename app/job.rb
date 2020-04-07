@@ -4,7 +4,7 @@ class Job
     @@all
   end
 
-  attr_accessor :client, :pick, :drop, :pkg_type, :svc_type, :time_ready, :courier, :completed, :picked, :due
+  attr_accessor :client, :pick, :drop, :pkg_type, :svc_type, :time_ready, :courier, :completed, :picked, :due, :pod, :drop_time
 
   def initialize client, pick, drop, pkg_type, svc_type, time_ready=Time.now#, due=due
     @client = client
@@ -16,6 +16,8 @@ class Job
     @courier = nil
     @completed = false
     @picked = false
+    @pod = nil
+    @drop_time = nil
     Job.all << self
   end
   
@@ -47,9 +49,19 @@ class Job
     active_jobs.select { |job| job.courier && !job.picked }
   end
 
-  # Instance methids
+  # Instance methods
   
   def assign_job courier
     self.courier = courier
+  end
+
+  def mark_picked
+    self.picked = true
+  end
+
+  def mark_complete pod, time=Time.now
+    self.pod = pod
+    self.drop_time = time
+    self.completed = true
   end
 end

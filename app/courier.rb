@@ -29,7 +29,7 @@ class Courier
   end
 
   def active_jobs
-    jobs.select{ |job| job.active }
+    jobs.select{ |job| !job.completed }
   end
 
   def not_picked
@@ -38,7 +38,7 @@ class Courier
 
   # Get an array of job instances currently active for this courier
   def holding
-    jobs.select{ |job| job.picked && job.active }
+    jobs.select{ |job| job.picked && !job.completed }
   end
   
   def zones_pending_pick
