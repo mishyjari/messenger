@@ -12,7 +12,7 @@ class Client
   end
 
   def delivery_request recipient, type, service_type 
-    Job.new(self, recipient, type, service_type)
+    Job.new(self, self.address, recipient, type, service_type, Time.now)
   end
 
   def all_client_jobs
